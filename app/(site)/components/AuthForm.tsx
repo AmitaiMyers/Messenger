@@ -5,6 +5,7 @@ import Input from "../../components/inputs/input";
 import Button from "../../components/inputs/Button";
 import AuthSocialButton from "./AuthSocialButton";
 import {BsGithub, BsGoogle} from "react-icons/bs";
+import axios from "axios";
 
 
 const AuthForm = () => {
@@ -34,10 +35,10 @@ const AuthForm = () => {
 
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
         setIsLoading(true);
-        if (variant === 'LOGIN') {
-            // Axios Register
-        }
         if (variant === 'REGISTER') {
+            axios.post('/api/register', data);
+        }
+        if (variant === 'LOGIN') {
             // NextAuth SignIn
         }
     }
@@ -73,8 +74,10 @@ const AuthForm = () => {
                     {variant === 'REGISTER' && (
                         <Input id="name" label="Name" register={register} errors={errors} disabled={isLoading}/>
                     )}
-                    <Input id="email" label="Email" type="email" register={register} errors={errors} disabled={isLoading}/>
-                    <Input id="password" label="Password" type="password" register={register} errors={errors} disabled={isLoading}/>
+                    <Input id="email" label="Email" type="email" register={register} errors={errors}
+                           disabled={isLoading}/>
+                    <Input id="password" label="Password" type="password" register={register} errors={errors}
+                           disabled={isLoading}/>
                     <Button
                         disabled={isLoading}
                         fullWidth
@@ -95,16 +98,16 @@ const AuthForm = () => {
                             </span>
                         </div>
                     </div>
-                <div className="mt-6 flex gap-2">
-                    <AuthSocialButton
-                    icon={BsGithub}
-                    onClick={() => socialAction('github')}
-                    />
-                    <AuthSocialButton
-                        icon={BsGoogle}
-                        onClick={() => socialAction('google')}
-                    />
-                </div>
+                    <div className="mt-6 flex gap-2">
+                        <AuthSocialButton
+                            icon={BsGithub}
+                            onClick={() => socialAction('github')}
+                        />
+                        <AuthSocialButton
+                            icon={BsGoogle}
+                            onClick={() => socialAction('google')}
+                        />
+                    </div>
                 </div>
                 <div className="flex gap-2 justify-center text-sm mt-6 px-2 text-gray-500">
                     <div>
